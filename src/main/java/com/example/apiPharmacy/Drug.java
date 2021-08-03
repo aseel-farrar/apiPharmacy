@@ -14,12 +14,6 @@ public class Drug {
     @Column(columnDefinition="TEXT")
     private String drugName;
 
-
-//    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinTable(
-//            name = "users_drugs",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "drug_id"))
     @ManyToMany(mappedBy = "drugs")
     private Set<Users> users = new HashSet<>();
 
@@ -52,7 +46,4 @@ public class Drug {
         return users;
     }
 
-//    public void setUsers(Set<Users> users) {
-//        this.users = users;
-//    }
 }

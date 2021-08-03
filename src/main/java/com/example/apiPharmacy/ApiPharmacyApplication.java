@@ -24,10 +24,6 @@ public class ApiPharmacyApplication implements CommandLineRunner {
     @Autowired
     DrugsService drugsService;
 
-    @Autowired
-    DrugsRepository drugsRepository;
-
-
     public static void main(String[] args) {
         SpringApplication.run(ApiPharmacyApplication.class, args);
     }
@@ -35,7 +31,15 @@ public class ApiPharmacyApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        // create users
+        // get the drugs from the API and save it in database
+        int numberOfHits = 5; //number of drugs = number of hits * 100
+        for (int counter = 1; counter <= (numberOfHits * 95); ) {
+            String url = "https://dailymed.nlm.nih.gov/dailymed/services/v2/drugnames.json?page=" + counter;
+            getDrugsFromApi(url);
+            counter += 95;
+        }
+
+        // create users for testing
         Users aseel = new Users("assel");
         userRepository.save(aseel);
 
@@ -51,15 +55,7 @@ public class ApiPharmacyApplication implements CommandLineRunner {
         Users yousef = new Users("yousef");
         userRepository.save(yousef);
 
-        // add drugs
-        int numberOfHits = 2; //number of drugs = number of hits * 100
-        for (int counter = 1; counter <= (numberOfHits * 95); ) {
-            String url = "https://dailymed.nlm.nih.gov/dailymed/services/v2/drugnames.json?page=" + counter;
-            getDrugsFromApi(url);
-            counter += 90;
-        }
-
-        // assign drugs to users
+        // assign drugs to users for testing
         assignDrugToUser(3L, 8L);
         assignDrugToUser(3L, 100L);
         assignDrugToUser(4L, 33L);
@@ -70,9 +66,8 @@ public class ApiPharmacyApplication implements CommandLineRunner {
         assignDrugToUser(2L, 300L);
         assignDrugToUser(1L, 33L);
         assignDrugToUser(1L, 300L);
-
     }
-
+// the following assignDrugToUser method here for testing
     /**
      * function to assign specific drug to specific user
      * @param userId
@@ -91,7 +86,6 @@ public class ApiPharmacyApplication implements CommandLineRunner {
      * @param url:
      * @throws: IOException
      */
-
     public void getDrugsFromApi(String url) throws IOException {
         HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
         connection.setConnectTimeout(5000);

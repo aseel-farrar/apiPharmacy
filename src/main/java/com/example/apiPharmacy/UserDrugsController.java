@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
@@ -14,52 +15,27 @@ public class UserDrugsController {
     DrugsService drugsService;
 
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
+
 
     @GetMapping("/")
     public String home(Model model) {
         List<Drug> drugsNames = drugsService.gerAllDrugs();
 
-        //TODO: get the user id
-//        model.addAttribute("user",userRepository.findUsersUserName("aseel"));
+        //TODO: get the user id and add it to the model instead static value
         model.addAttribute("userId", 4L);
         model.addAttribute("drugsNames", drugsNames);
         return "UserDrugs";
     }
 
     @PostMapping("/addDrug")
-    public void addDrug(@RequestParam Long userId, @RequestParam Long drugId) {
+    public RedirectView addDrug(@RequestParam Long userId, @RequestParam Long drugId) {
         if (drugId != 0) {
-            assignDrugToUser(userId, drugId);
+            userService.assignDrugToUser(userId, drugId);
         }
 
         //TODO: redirect and handle the exception
+        return new RedirectView("#");
     }
-
-//////>>>>>> TODO: put the following function in user service
-
-    /**
-     * function to assign specific drug to specific user
-     *
-     * @param userId
-     * @param drugId
-     */
-    public void assignDrugToUser(Long userId, Long drugId) {
-        Users user = userRepository.findUsersByUserId(userId);
-        Drug drug = drugsService.getDrug(drugId);
-        user.getDrugs().add(drug);
-        userRepository.save(user);
-    }
-
-    ////////////////////////////////////////////////////////////
-//    @RequestMapping(value = "/autocomplete")
-//    @ResponseBody
-//    public List<String> autoName(@RequestParam(value = "term", required = false, defaultValue = "")String term){
-//        List<String> designation = dao.getDesignation(term);
-//        return designation;
-//    }
-
-
-    //////////////////////////////////////////////////////////
 
 }
