@@ -17,14 +17,13 @@ public class UserDrugsController {
     @Autowired
     UserService userService;
 
-
     @GetMapping("/")
     public String home(Model model) {
-        List<Drug> drugsNames = drugsService.gerAllDrugs();
+        List<Drug> drugs = drugsService.gerAllDrugs();
 
         //TODO: get the user id and add it to the model instead static value
         model.addAttribute("userId", 4L);
-        model.addAttribute("drugsNames", drugsNames);
+        model.addAttribute("drugs", drugs);
         return "UserDrugs";
     }
 
@@ -34,7 +33,7 @@ public class UserDrugsController {
             userService.assignDrugToUser(userId, drugId);
         }
 
-        //TODO: redirect and handle the exception
+        //TODO: redirect
         return new RedirectView("#");
     }
 

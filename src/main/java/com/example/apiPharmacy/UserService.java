@@ -20,8 +20,8 @@ public class UserService {
     public void assignDrugToUser(Long userId, Long drugId) {
         Users user = userRepository.findUsersByUserId(userId);
         Drug drug = drugsService.getDrug(drugId);
+
         user.getDrugs().add(drug);
         userRepository.save(user);
     }
-
 }
