@@ -1,4 +1,4 @@
-package com.example.apiPharmacy.jasonToObject;
+package com.example.apiPharmacy.jasonToObjectModel;
 
 import java.util.Map;
 

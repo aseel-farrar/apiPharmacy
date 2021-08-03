@@ -1,6 +1,6 @@
 package com.example.apiPharmacy;
 
-import com.example.apiPharmacy.jasonToObject.DrugApi;
+import com.example.apiPharmacy.jasonToObjectModel.DrugApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
