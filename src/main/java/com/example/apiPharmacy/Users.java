@@ -11,13 +11,14 @@ public class Users {
     private Long userId;
     private String userName;
 
-//    @ManyToMany(mappedBy = "users")
+//////>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ADD  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<</////
 @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 @JoinTable(
         name = "users_drugs",
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "drug_id"))
     private final Set<Drug> drugs = new HashSet<>();
+//////>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ADD  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<</////
 
     /**
      * Constructors
@@ -35,7 +36,6 @@ public class Users {
      * Getters & Setters
      */
 
-
     public Long getUserId() {
         return userId;
     }
@@ -48,12 +48,10 @@ public class Users {
         this.userName = userName;
     }
 
+//////>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ADD  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<</////
     public Set<Drug> getDrugs() {
         return drugs;
     }
-
-//    public void setDrugs(Set<Drug> drugs) {
-//        this.drugs = drugs;
-//    }
+//////>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ADD  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<</////
 
 }
